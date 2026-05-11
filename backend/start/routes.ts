@@ -10,6 +10,7 @@
 import AuthController from '#controllers/auth_controller'
 import router from '@adonisjs/core/services/router'
 import { middleware } from './kernel.js'
+import CardsController from '#controllers/cards_controller'
 
 router.get('/', async () => {
   return {
@@ -22,3 +23,7 @@ router.group(() => {
   router.post('/login', [AuthController, 'login'])
   router.post('/logout', [AuthController, 'logout']).use(middleware.auth())
 }).prefix('/api')
+
+router.group(() => {
+  router.resource('cards', CardsController)
+}).prefix('/api').use(middleware.auth())

@@ -12,7 +12,7 @@ export default class Card extends BaseModel {
   declare verso: string
 
   @column()
-  declare next_review_at: DateTime
+  declare next_review_at: DateTime | null
 
   @column()
   declare box: 1 | 2 | 3 | 4 | 5
