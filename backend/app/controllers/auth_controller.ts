@@ -15,17 +15,20 @@ export default class AuthController {
 
     async login({ request, response }: HttpContext) {
 
+        // Validate the payload with LoginValidator
         const { email, password } = await request.validateUsing(loginValidator)
 
+        // Verify the user's credentials (email and password)
         const user = await User.verifyCredentials(email, password)
 
+        // Create a new access token for the user
         const token = await User.accessTokens.create(user)
 
+        //return the user and the token
         return response.ok({
             token: token,
             ...user.serialize()
         })
-
     }
 
     async logout({ auth, response }: HttpContext) {
