@@ -15,6 +15,7 @@
 import Card from '#models/card'
 import User from '#models/user'
 import { Bouncer } from '@adonisjs/bouncer'
+import { DateTime } from 'luxon'
 
 /**
  * Delete the following ability to start from
@@ -22,4 +23,8 @@ import { Bouncer } from '@adonisjs/bouncer'
  */
 export const cardSecurity = Bouncer.ability((user: User, card: Card) => {
   return user.id === card.user_id
+})
+
+export const isReviewable = Bouncer.ability((user: User, card: Card, now: DateTime) => {
+  return card.next_review_at === null || card.next_review_at <= now
 })

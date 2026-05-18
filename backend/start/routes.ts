@@ -11,6 +11,7 @@ import AuthController from '#controllers/auth_controller'
 import router from '@adonisjs/core/services/router'
 import { middleware } from './kernel.js'
 import CardsController from '#controllers/cards_controller'
+import ReviewsController from '#controllers/reviews_controller'
 
 router
   .group(() => {
@@ -19,6 +20,14 @@ router
     router.post('/logout', [AuthController, 'logout']).use(middleware.auth())
   })
   .prefix('/api')
+
+router
+  .group(() => {
+    router.post('/:id/reviews/answer', [ReviewsController, 'answer'])
+    router.get('/reviews', [ReviewsController, 'review'])
+  })
+  .prefix('/api/cards')
+  .use(middleware.auth())
 
 router
   .group(() => {
