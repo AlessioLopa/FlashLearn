@@ -29,7 +29,7 @@ export default class ReviewsController {
     if (await bouncer.denies('isReviewable', card, now)) {
       return response.badRequest({ message: 'Card is not reviewable yet' })
     }
-    const success = await request.validateUsing(reviewValidator)
+    const { success } = await request.validateUsing(reviewValidator)
     console.debug('Review answer received:', success)
     console.debug('Current card state before review:', card.box)
 
@@ -40,52 +40,46 @@ export default class ReviewsController {
             box: 2,
             next_review_at: now.plus({ [typeTimeDelay]: delayBox2 }),
           })
-          card.save()
           break
         case 2:
           card.merge({
             box: 3,
             next_review_at: now.plus({ [typeTimeDelay]: delayBox3 }),
           })
-          card.save()
           break
         case 3:
           card.merge({
             box: 4,
             next_review_at: now.plus({ [typeTimeDelay]: delayBox4 }),
           })
-          card.save()
           break
         case 4:
           card.merge({
             box: 5,
             next_review_at: now.plus({ [typeTimeDelay]: delayBox5 }),
           })
-          card.save()
           break
         case 5:
           card.merge({
             next_review_at: now.plus({ [typeTimeDelay]: delayBox5 }),
           })
-          card.save()
           break
       }
-    }
-
-    if (!success) {
+    } else {
       card.merge({
         box: 1,
         next_review_at: now.plus({ [typeTimeDelay]: delayBox1 }),
       })
-      card.save()
     }
+
+    await card.save()
 
     console.debug('Current card state after review:', card.box)
 
     return response.ok({ message: 'Review recorded', success: success, card: card })
   }
 
-  async review({ request, response, bouncer, auth }: HttpContext) {
+  async review({ response, auth }: HttpContext) {
     const user = auth.user
 
     const cards = await Card.query()

@@ -11,7 +11,7 @@ export default class Card extends BaseModel {
   @column()
   declare verso: string
 
-  @column()
+  @column.dateTime()
   declare next_review_at: DateTime | null
 
   @column()
