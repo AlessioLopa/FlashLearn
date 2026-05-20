@@ -1,5 +1,265 @@
-<template></template>
+<template>
+  <div id="page">
+    <div class="content">
+      <div class="welcome">
+        <h1 class="title">Bienvenue ! 👋</h1>
+        <Button
+          class="logout-btn"
+          icon="pi pi-sign-out"
+          severity="secondary"
+          @click="logoutSelected"
+        />
+      </div>
+      <div class="info">
+        <h1 id="total-card">{{ totalCards }}</h1>
+        <div class="boxes-container">
+          <ProgressBar :value="50" styleClass="mb-3"></ProgressBar>
+          <div class="boxes-cards">
+            <h1 class="box-card">{{ totalCardsByBox[1] }}</h1>
+            <h1 class="box-card">{{ totalCardsByBox[2] }}</h1>
+            <h1 class="box-card">{{ totalCardsByBox[3] }}</h1>
+            <h1 class="box-card">{{ totalCardsByBox[4] }}</h1>
+            <h1 class="box-card">{{ totalCardsByBox[5] }}</h1>
+          </div>
+        </div>
+      </div>
+      <div class="fast-action">
+        <h1>Action rapide</h1>
+        <div class="action">
+          <Button
+            class="btn"
+            label="Commencer révision"
+            severity="secondary"
+            @click="startReview"
+          ></Button>
+          <Button
+            class="btn"
+            icon="pi pi-plus"
+            severity="secondary"
+            @click="newCardDialogVisible = true"
+          ></Button>
+        </div>
+      </div>
+      <div class="cards-list">
+        <h1>Cartes</h1>
+        <DataTable :value="cards" scrollable scrollHeight="400px">
+          <Column style="width: auto" field="recto" header="Recto"></Column>
+          <Column style="width: auto" field="verso" header="Verso"></Column>
+          <Column style="width: 4rem">
+            <template #body="{ data }">
+              <Button
+                icon="pi pi-trash"
+                @click="deleteCardSelected(data)"
+                severity="secondary"
+                rounded
+              ></Button>
+            </template>
+          </Column>
+          <Column style="width: 4rem">
+            <template #body="{ data }">
+              <Button
+                icon="pi pi-pencil"
+                @click="updateCard(data)"
+                severity="secondary"
+                rounded
+              ></Button>
+            </template>
+          </Column>
+        </DataTable>
+      </div>
+    </div>
+  </div>
+  <NewCardDialog
+    v-model:visible="newCardDialogVisible"
+    @update:visible="
+      newCardDialogVisible = false;
+      fetchCards();
+    "
+  />
+  <EditCardDialog
+    v-model:visible="editCardDialogVisible"
+    :card="selectedCardForUpdate"
+    @update:visible="
+      editCardDialogVisible = false;
+      fetchCards();
+    "
+  ></EditCardDialog>
+</template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import router from "@/router";
+import { logout } from "@/services/auth";
+import { deleteCard, getCards } from "@/services/card";
+import { Button, DataTable, Column, ProgressBar } from "primevue";
+import { onMounted, ref } from "vue";
+import type { Card } from "@/interfaces/card";
+import NewCardDialog from "@/components/newCardDialog.vue";
+import EditCardDialog from "@/components/editCardDialog.vue";
 
-<style scoped></style>
+const cards = ref([]);
+const totalCards = ref(0);
+const totalCardsByBox = ref({
+  1: 0,
+  2: 0,
+  3: 0,
+  4: 0,
+  5: 0,
+});
+
+const newCardDialogVisible = ref(false);
+const editCardDialogVisible = ref(false);
+
+const selectedCardForUpdate = ref<Card>({
+  id: 0,
+  recto: "",
+  verso: "",
+  next_review_at: null,
+  box: 1,
+});
+
+const fetchCards = async () => {
+  cards.value = await getCards().catch((error: any) => {
+    alert(error.message);
+  });
+
+  totalCards.value = cards.value.length;
+
+  totalCardsByBox.value[1] = cards.value.filter(
+    (card: any) => card.box === 1,
+  ).length;
+  totalCardsByBox.value[2] = cards.value.filter(
+    (card: any) => card.box === 2,
+  ).length;
+  totalCardsByBox.value[3] = cards.value.filter(
+    (card: any) => card.box === 3,
+  ).length;
+  totalCardsByBox.value[4] = cards.value.filter(
+    (card: any) => card.box === 4,
+  ).length;
+  totalCardsByBox.value[5] = cards.value.filter(
+    (card: any) => card.box === 5,
+  ).length;
+};
+
+onMounted(async () => {
+  await fetchCards();
+});
+
+const logoutSelected = async () => {
+  try {
+    if (await logout()) {
+      router.push("/login");
+    }
+  } catch (error: any) {
+    alert(error.message);
+  }
+};
+
+const deleteCardSelected = async (data: Card) => {
+  try {
+    await deleteCard(data.id);
+    await fetchCards();
+  } catch (error: any) {
+    alert(error.message);
+  }
+};
+
+const updateCard = (data: any) => {
+  editCardDialogVisible.value = true;
+  selectedCardForUpdate.value = data;
+};
+
+const startReview = async () => {
+  await router.push("/review");
+};
+</script>
+
+<style scoped>
+#page {
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  background: #f5f5f5;
+  overflow: hidden;
+  margin: 0;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+}
+
+.welcome {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.title {
+  text-align: left;
+  font-size: 2.5rem;
+}
+
+.logout-btn {
+  margin-left: auto;
+}
+
+.info {
+  display: flex;
+  gap: 2rem;
+
+  margin-bottom: 2rem;
+}
+
+.boxes-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.boxes-cards {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.box-card {
+  width: fit-content;
+
+  border: 1px solid black;
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+#total-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3rem;
+  font-weight: 700;
+  margin: 0;
+
+  width: fit-content;
+
+  border: 1px solid black;
+  border-radius: 12px;
+
+  padding: 1rem;
+}
+
+.action {
+  display: flex;
+  gap: 1rem;
+}
+
+.btn {
+  border: 1px solid black;
+}
+
+.cards-list {
+  margin-bottom: 2rem;
+}
+</style>
