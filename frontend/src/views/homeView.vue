@@ -13,7 +13,28 @@
       <div class="info">
         <h1 id="total-card">{{ totalCards }}</h1>
         <div class="boxes-container">
-          <ProgressBar :value="50" styleClass="mb-3"></ProgressBar>
+          <div class="segmented-bar">
+            <div
+              class="segment"
+              :style="{ flexGrow: totalCardsByBox[1] }"
+            ></div>
+            <div
+              class="segment"
+              :style="{ flexGrow: totalCardsByBox[2] }"
+            ></div>
+            <div
+              class="segment"
+              :style="{ flexGrow: totalCardsByBox[3] }"
+            ></div>
+            <div
+              class="segment"
+              :style="{ flexGrow: totalCardsByBox[4] }"
+            ></div>
+            <div
+              class="segment"
+              :style="{ flexGrow: totalCardsByBox[5] }"
+            ></div>
+          </div>
           <div class="boxes-cards">
             <h1 class="box-card">{{ totalCardsByBox[1] }}</h1>
             <h1 class="box-card">{{ totalCardsByBox[2] }}</h1>
@@ -241,12 +262,9 @@ const startReview = async () => {
   font-size: 3rem;
   font-weight: 700;
   margin: 0;
-
   width: fit-content;
-
   border: 1px solid black;
   border-radius: 12px;
-
   padding: 1rem;
 }
 
@@ -261,5 +279,30 @@ const startReview = async () => {
 
 .cards-list {
   margin-bottom: 2rem;
+}
+
+.segmented-bar {
+  display: flex;
+  width: 100%;
+  height: 1rem;
+  border-radius: 12px;
+  background-color: #e5e5e5;
+  gap: 2px;
+}
+
+.segment:nth-child(1) {
+  background: #ef4444;
+}
+.segment:nth-child(2) {
+  background: #f97316;
+}
+.segment:nth-child(3) {
+  background: #eab308;
+}
+.segment:nth-child(4) {
+  background: #84cc16;
+}
+.segment:nth-child(5) {
+  background: #22c55e;
 }
 </style>
