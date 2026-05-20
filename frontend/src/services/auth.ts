@@ -14,7 +14,7 @@ export const login = async (email: string, password: string) => {
     return false;
   } catch (error: AxiosError | any) {
     throw {
-      message: error.response?.data.errors[0].message,
+      message: error.response.data.message,
       status: error.response?.status,
     };
   }
@@ -30,7 +30,32 @@ export const register = async (email: string, password: string) => {
     return false;
   } catch (error: AxiosError | any) {
     throw {
-      message: error.response?.data.errors[0].message,
+      message: error.response.data.message,
+      status: error.response?.status,
+    };
+  }
+};
+
+export const logout = async () => {
+  try {
+    const response = await api.post(
+      "/logout",
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+      },
+    );
+
+    if (response.status === 200 && response.data.message === "Logged out") {
+      localStorage.removeItem("access_token");
+      return true;
+    }
+    return false;
+  } catch (error: AxiosError | any) {
+    throw {
+      message: error.response.data.message,
       status: error.response?.status,
     };
   }

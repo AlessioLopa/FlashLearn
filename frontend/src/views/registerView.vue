@@ -52,9 +52,7 @@
           label="Créer"
         />
 
-        <router-link to="/login" class="login-link">
-          Se connecter
-        </router-link>
+        <router-link to="/login" class="login-link"> Se connecter </router-link>
       </Form>
     </div>
   </div>
