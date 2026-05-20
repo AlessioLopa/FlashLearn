@@ -191,7 +191,7 @@ const updateCard = (data: any) => {
 };
 
 const startReview = async () => {
-  await router.push("/review");
+  router.push("/review");
 };
 </script>
 
@@ -291,6 +291,9 @@ const startReview = async () => {
 }
 
 .segment:nth-child(1) {
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+
   background: #ef4444;
 }
 .segment:nth-child(2) {
