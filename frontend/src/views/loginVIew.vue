@@ -72,7 +72,7 @@ import { login } from "@/services/auth";
 import router from "@/router";
 
 let loginData = ref({
-  username: "",
+  email: "",
   password: "",
 });
 
@@ -90,7 +90,6 @@ const resolver = ref(
 );
 
 const onFormSubmit = async ({ valid, values }: any) => {
-  console.log(valid, values);
   if (valid) {
     try {
       if (await login(values.email, values.password)) {
