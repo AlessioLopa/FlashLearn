@@ -7,11 +7,11 @@
           <h1>Moment révision !</h1>
           <div class="progress-bar">
             <ProgressBar
-              :value="(index * 100) / cardLength"
+              :value="((index + 1) * 100) / cardLength"
               :showValue="false"
               style="width: 200px; height: 12px"
             ></ProgressBar>
-            <p>{{ index }} / {{ cardLength }}</p>
+            <p>{{ index + 1 }} / {{ cardLength }}</p>
           </div>
         </div>
         <div class="card-section">

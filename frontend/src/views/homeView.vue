@@ -58,12 +58,18 @@
             icon="pi pi-plus"
             severity="secondary"
             @click="newCardDialogVisible = true"
+            name="create-card"
           ></Button>
         </div>
       </div>
       <div class="cards-list">
         <h1>Cartes</h1>
-        <DataTable :value="cards" scrollable scrollHeight="400px">
+        <DataTable
+          :value="cards"
+          scrollable
+          scrollHeight="400px"
+          class="cards-datatable"
+        >
           <Column style="width: auto" field="recto" header="Recto"></Column>
           <Column style="width: auto" field="verso" header="Verso"></Column>
           <Column style="width: 4rem">
