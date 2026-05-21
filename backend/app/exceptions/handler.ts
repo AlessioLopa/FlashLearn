@@ -1,6 +1,7 @@
 import app from '@adonisjs/core/services/app'
 import { HttpContext, ExceptionHandler } from '@adonisjs/core/http'
 import { Exception } from '@adonisjs/core/exceptions'
+import { errors as vineJSErrors } from '@vinejs/vine'
 
 export default class HttpExceptionHandler extends ExceptionHandler {
   /**
@@ -25,6 +26,12 @@ export default class HttpExceptionHandler extends ExceptionHandler {
       }
     }
 
+    if (error instanceof vineJSErrors.E_VALIDATION_ERROR) {
+      return ctx.response.unprocessableEntity({
+        status: 422,
+        error: error.messages,
+      })
+    }
     return super.handle(error, ctx)
   }
 
