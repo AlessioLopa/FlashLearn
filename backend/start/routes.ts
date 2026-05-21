@@ -7,11 +7,22 @@
 |
 */
 
-import AuthController from '#controllers/auth_controller'
+const AuthController = () => import('#controllers/auth_controller')
+const CardsController = () => import('#controllers/cards_controller')
+const ReviewsController = () => import('#controllers/reviews_controller')
+
 import router from '@adonisjs/core/services/router'
 import { middleware } from './kernel.js'
-import CardsController from '#controllers/cards_controller'
-import ReviewsController from '#controllers/reviews_controller'
+import AutoSwagger from 'adonis-autoswagger'
+import swagger from '#config/swagger'
+
+router.get('swagger', async () => {
+  return AutoSwagger.default.docs(router.toJSON(), swagger)
+})
+
+router.get('docs', async () => {
+  return AutoSwagger.default.ui('/swagger', swagger)
+})
 
 router
   .group(() => {

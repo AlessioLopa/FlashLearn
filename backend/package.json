@@ -7,11 +7,11 @@
   "scripts": {
     "start": "node bin/server.js",
     "build": "node ace build",
-    "dev": "node ace serve --hmr",
-    "test": "node ace test",
+    "dev": "node ace serve --watch",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "c8 --check-coverage node ace test"
   },
   "imports": {
     "#controllers/*": "./app/controllers/*.js",
@@ -43,6 +43,7 @@
     "@swc/core": "1.11.24",
     "@types/luxon": "^3.7.1",
     "@types/node": "^22.15.18",
+    "c8": "^11.0.0",
     "eslint": "^9.26.0",
     "hot-hook": "^0.4.0",
     "pino-pretty": "^13.0.0",
@@ -59,6 +60,7 @@
     "@adonisjs/session": "^7.7.1",
     "@adonisjs/shield": "^8.2.0",
     "@vinejs/vine": "^3.0.1",
+    "adonis-autoswagger": "^3.73.0",
     "luxon": "^3.7.2",
     "mysql2": "^3.22.3",
     "reflect-metadata": "^0.2.2"
