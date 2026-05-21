@@ -2,7 +2,7 @@ import { test } from '@japa/runner'
 
 test.group('Register', () => {
   // TF-USR-03
-  test('Register without data', async ({ client }) => {
+  test('TF-USR-03 - Register without data', async ({ client }) => {
     const response = await client.post('/api/register').json({
       email: '',
       password: '',
@@ -25,7 +25,7 @@ test.group('Register', () => {
   })
 
   // TF-USR-04
-  test('Register email not valid', async ({ client }) => {
+  test('TF-USR-04 - Register email not valid', async ({ client }) => {
     const response = await client.post('/api/register').json({
       email: 'test.com',
       password: 'password',
@@ -42,7 +42,7 @@ test.group('Register', () => {
   })
 
   // TF-USR-02
-  test('Register with existing email', async ({ client }) => {
+  test('TF-USR-02 - Register with existing email', async ({ client }) => {
     const response = await client.post('/api/register').json({
       email: 'alessio.lopardo@etml.ch',
       password: 'password',
@@ -60,7 +60,7 @@ test.group('Register', () => {
   })
 
   // TF-USR-01
-  test('Register valid user', async ({ client }) => {
+  test('TF-USR-01 - Register valid user', async ({ client }) => {
     const response = await client.post('/api/register').json({
       email: 'user@test.ch',
       password: 'password',
@@ -74,7 +74,7 @@ test.group('Register', () => {
 
 test.group('Login', () => {
   // TF-USR-05
-  test('Login with valid data', async ({ client }) => {
+  test('TF-USR-05 - Login with valid data', async ({ client }) => {
     const response = await client.post('/api/login').json({
       email: 'alessio.lopardo@etml.ch',
       password: 'password',
@@ -83,7 +83,7 @@ test.group('Login', () => {
   })
 
   // TF-USR-06
-  test('Login with incorrect password', async ({ client }) => {
+  test('TF-USR-06 - Login with incorrect password', async ({ client }) => {
     const response = await client.post('/api/login').json({
       email: 'alessio.lopardo@etml.ch',
       password: 'wrongpassword',
@@ -99,7 +99,7 @@ test.group('Login', () => {
   })
 
   // TF-USR-07
-  test('Login without data', async ({ client }) => {
+  test('TF-USR-07 - Login without data', async ({ client }) => {
     const response = await client.post('/api/login').json({
       email: '',
       password: '',
@@ -122,7 +122,7 @@ test.group('Login', () => {
   })
 
   // TF-USR-08
-  test('Login email not valid', async ({ client }) => {
+  test('TF-USR-08 - Login email not valid', async ({ client }) => {
     const response = await client.post('/api/login').json({
       email: 'test.com',
       password: 'password',
@@ -139,7 +139,7 @@ test.group('Login', () => {
   })
 
   // TF-USR-09
-  test('Login with non existant email', async ({ client }) => {
+  test('TF-USR-09 - Login with non existant email', async ({ client }) => {
     const response = await client.post('/api/login').json({
       email: 'test@test.com',
       password: 'password',
@@ -157,7 +157,7 @@ test.group('Login', () => {
 
 test.group('Logout', () => {
   // TF-USR-10
-  test('Logout with valid token', async ({ client }) => {
+  test('TF-USR-10 - Logout with valid token', async ({ client }) => {
     const login = await client.post('/api/login').json({
       email: 'alessio.lopardo@etml.ch',
       password: 'password',
@@ -173,7 +173,7 @@ test.group('Logout', () => {
   })
 
   // TF-USR-11
-  test('Logout without valid token', async ({ client }) => {
+  test('TF-USR-11 - Logout without valid token', async ({ client }) => {
     const response = await client.post('/api/logout')
     response.assertStatus(401)
     response.assertBodyContains({
