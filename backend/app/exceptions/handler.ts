@@ -1,5 +1,6 @@
 import app from '@adonisjs/core/services/app'
 import { HttpContext, ExceptionHandler } from '@adonisjs/core/http'
+import { Exception } from '@adonisjs/core/exceptions'
 
 export default class HttpExceptionHandler extends ExceptionHandler {
   /**
@@ -13,6 +14,18 @@ export default class HttpExceptionHandler extends ExceptionHandler {
    * response to the client
    */
   async handle(error: unknown, ctx: HttpContext) {
+    if (error instanceof Exception) {
+      switch (error.code) {
+        case 'E_ROW_NOT_FOUND':
+          ctx.response.notFound({ message: 'Ressource introuvable' })
+          break
+        case 'E_UNAUTHORIZED_ACCESS':
+          ctx.response.unauthorized({ message: 'Non autorisé' })
+          break
+      }
+      return
+    }
+
     return super.handle(error, ctx)
   }
 

@@ -23,15 +23,13 @@ export default class ReviewsController {
     const card = await Card.findOrFail(params.id)
 
     if (await bouncer.denies(cardSecurity, card)) {
-      return response.notFound({ message: 'Card not found' })
+      return response.notFound({ message: 'Ressource introuvable' })
     }
 
     if (await bouncer.denies('isReviewable', card, now)) {
-      return response.badRequest({ message: 'Card is not reviewable yet' })
+      return response.badRequest({ message: "La carte n'est pas encore prête à être révisée" })
     }
     const { success } = await request.validateUsing(reviewValidator)
-    console.debug('Review answer received:', success)
-    console.debug('Current card state before review:', card.box)
 
     if (success) {
       switch (card.box) {
@@ -79,8 +77,6 @@ export default class ReviewsController {
 
     await card.save()
 
-    console.debug('Current card state after review:', card.box)
-
     return response.ok({ message: 'Review recorded', success: success, card: card })
   }
 
@@ -97,7 +93,7 @@ export default class ReviewsController {
       .exec()
 
     if (cards.length === 0) {
-      return response.badRequest({ message: 'No cards to review' })
+      return response.badRequest({ message: 'Aucune carte à réviser' })
     }
 
     return response.ok(cards)

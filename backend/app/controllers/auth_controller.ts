@@ -34,11 +34,11 @@ export default class AuthController {
     const token = auth.user?.currentAccessToken.identifier
 
     if (!token) {
-      return response.badRequest({ message: 'Token not found' })
+      return response.badRequest({ message: 'Token introuvable' })
     }
 
     await User.accessTokens.delete(user, token)
 
-    return response.ok({ message: 'Logged out' })
+    return response.ok({ message: 'Déconnexion réussie' })
   }
 }

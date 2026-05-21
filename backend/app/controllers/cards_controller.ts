@@ -29,7 +29,8 @@ export default class CardsController {
 
     if (cardCount.length >= 20) {
       return response.unprocessableEntity({
-        message: 'You have reached the maximum number of cards in this box',
+        message:
+          'Vous avez atteitnt le nombre maximum de cartes en box 1 (20). Veuillez réviser vos cartes pour en ajouter de nouvelles.',
       })
     }
 
@@ -54,7 +55,7 @@ export default class CardsController {
 
     // Check if the user is the author of the card if not return 404
     if (await bouncer.denies(cardSecurity, card)) {
-      return response.notFound({ message: 'Card not found' })
+      return response.notFound({ message: 'Ressource introuvable' })
     }
 
     return response.ok(card)
@@ -72,7 +73,7 @@ export default class CardsController {
     const card = await Card.findOrFail(params.id)
 
     if (await bouncer.denies(cardSecurity, card)) {
-      return response.notFound({ message: 'Card not found' })
+      return response.notFound({ message: 'Ressource introuvable' })
     }
 
     const payload = await request.validateUsing(cardValidator)
@@ -94,7 +95,7 @@ export default class CardsController {
 
     // Check if the user is the author of the card if not return 404
     if (await bouncer.denies(cardSecurity, card)) {
-      return response.notFound({ message: 'Card not found' })
+      return response.notFound({ message: 'Ressource introuvable' })
     }
 
     await card.delete()
