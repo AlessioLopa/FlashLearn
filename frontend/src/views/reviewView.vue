@@ -41,25 +41,15 @@
           </div>
         </div>
       </div>
-
-      <div
-        class="endReview"
+      <EndReview
+        :message="'Session de révision terminée'"
         v-if="reviewing === false && noCardToReview === false"
-      >
-        <h1>Session de révision terminée</h1>
-        <router-link to="/home" class="register-link">
-          Revenir à l'accueil
-        </router-link>
-      </div>
-      <div
-        class="endReview"
+      ></EndReview>
+
+      <EndReview
+        :message="`Pas de cartes à réviser pour l'instant`"
         v-if="reviewing === false && noCardToReview === true"
-      >
-        <h1>Pas de cartes à réviser pour l'instant</h1>
-        <router-link to="/home" class="register-link">
-          Revenir à l'accueil
-        </router-link>
-      </div>
+      ></EndReview>
     </div>
   </div>
 </template>
@@ -70,6 +60,7 @@ import { answerReview, getCardsForReview } from "@/services/review";
 import { Button } from "primevue";
 import { onMounted, reactive, ref } from "vue";
 import ProgressBar from "primevue/progressbar";
+import EndReview from "@/components/endReview.vue";
 
 const cards = ref<Card[]>([]);
 
@@ -91,24 +82,28 @@ onMounted(async () => {
 
     cardToReview.value = cards.value[index.value];
   } catch (error: any) {
-    reviewing.value = false;
-    noCardToReview.value = true;
-    alert(error.message);
+    if (error.message === "No cards to review") {
+      noCardToReview.value = true;
+      reviewing.value = false;
+      return;
+    } else {
+      alert(error.message);
+    }
   }
 });
 
 const onAnswer = async (success: boolean) => {
   if (index.value < cardLength.value - 1) {
     index.value += 1;
+    cardFliped.value = false;
   } else {
     index.value = 0;
     reviewing.value = false;
   }
-  cardToReview.value = cards.value[index.value];
-  cardFliped.value = false;
 
   try {
     await answerReview(cardToReview.value!.id, success);
+    cardToReview.value = cards.value[index.value];
   } catch (error: any) {
     alert(error.message);
   }

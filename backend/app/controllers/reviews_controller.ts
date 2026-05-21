@@ -40,29 +40,34 @@ export default class ReviewsController {
             box: 2,
             next_review_at: now.plus({ [typeTimeDelay]: delayBox2 }),
           })
+
           break
         case 2:
           card.merge({
             box: 3,
             next_review_at: now.plus({ [typeTimeDelay]: delayBox3 }),
           })
+
           break
         case 3:
           card.merge({
             box: 4,
             next_review_at: now.plus({ [typeTimeDelay]: delayBox4 }),
           })
+
           break
         case 4:
           card.merge({
             box: 5,
             next_review_at: now.plus({ [typeTimeDelay]: delayBox5 }),
           })
+
           break
         case 5:
           card.merge({
             next_review_at: now.plus({ [typeTimeDelay]: delayBox5 }),
           })
+
           break
       }
     } else {
@@ -92,7 +97,7 @@ export default class ReviewsController {
       .exec()
 
     if (cards.length === 0) {
-      return response.ok({ message: 'No cards to review' })
+      return response.badRequest({ message: 'No cards to review' })
     }
 
     return response.ok(cards)
