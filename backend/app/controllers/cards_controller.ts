@@ -15,11 +15,6 @@ export default class CardsController {
   }
 
   /**
-   * Display form to create a new record
-   */
-  async create({}: HttpContext) {}
-
-  /**
    * Handle form submission for the create action
    */
   async store({ auth, request, response }: HttpContext) {
@@ -60,11 +55,6 @@ export default class CardsController {
 
     return response.ok(card)
   }
-
-  /**
-   * Edit individual record
-   */
-  async edit({ params }: HttpContext) {}
 
   /**
    * Handle form submission for the edit action

@@ -17,13 +17,12 @@ export default class HttpExceptionHandler extends ExceptionHandler {
     if (error instanceof Exception) {
       switch (error.code) {
         case 'E_ROW_NOT_FOUND':
-          ctx.response.notFound({ message: 'Ressource introuvable' })
-          break
+          return ctx.response.notFound({ status: 404, message: 'Ressource introuvable' })
         case 'E_UNAUTHORIZED_ACCESS':
-          ctx.response.unauthorized({ message: 'Non autorisé' })
-          break
+          return ctx.response.unauthorized({ status: 401, message: 'Non autorisé' })
+        case 'E_INVALID_CREDENTIALS':
+          return ctx.response.badRequest({ status: 400, message: 'Identifiants invalides' })
       }
-      return
     }
 
     return super.handle(error, ctx)
