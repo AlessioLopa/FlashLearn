@@ -1,4 +1,3 @@
-import LoginVIew from "@/views/loginVIew.vue";
 import { createRouter, createWebHistory } from "vue-router";
 
 const router = createRouter({
@@ -36,10 +35,14 @@ const router = createRouter({
   ],
 });
 
-router.beforeEach((to, from) => {
+router.beforeEach((to) => {
+  // Check if the route requires authentication and if the user is not authenticated, if so redirect to login page
   if (to.meta.requiresAuth && !localStorage.getItem("access_token")) {
     return { name: "login" };
-  } else if (to.meta.requiersNotAuth && localStorage.getItem("access_token")) {
+  }
+
+  // Check if the route doesn't require authentication and if the user is authenticated, if so redirect to home
+  else if (to.meta.requiersNotAuth && localStorage.getItem("access_token")) {
     return { name: "home" };
   } else {
     return true;
