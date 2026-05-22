@@ -36,12 +36,14 @@
         </FormField>
 
         <Message
+          v-for="error in loginError"
+          :key="error"
           v-if="loginError"
           severity="error"
           size="small"
           variant="simple"
         >
-          {{ loginError }}
+          {{ error.message }}
         </Message>
 
         <Button
@@ -76,12 +78,12 @@ let loginData = ref({
   password: "",
 });
 
-let loginError = ref("");
+let loginError = ref([]);
 
 const resolver = ref(
   zodResolver(
     z.object({
-      email: z.string().email("Email invalide"),
+      email: z.email("Email invalide"),
       password: z
         .string()
         .min(8, "Le mot de passe doit contenir au moins 8 caractères"),
@@ -93,12 +95,10 @@ const onFormSubmit = async ({ valid, values }: any) => {
   if (valid) {
     try {
       if (await login(values.email, values.password)) {
-        if (localStorage.getItem("access_token")) {
-          await router.push("/home");
-        }
+        router.push("/home");
       }
     } catch (error: any) {
-      loginError.value = error.message;
+      loginError.value = error.errors;
       return;
     }
   }

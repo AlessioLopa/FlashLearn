@@ -82,7 +82,7 @@ onMounted(async () => {
 
     cardToReview.value = cards.value[index.value];
   } catch (error: any) {
-    if (error.message === "No cards to review") {
+    if (error.code === "NO_CARDS_TO_REVIEW") {
       noCardToReview.value = true;
       reviewing.value = false;
       return;

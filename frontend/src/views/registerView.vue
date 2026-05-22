@@ -37,12 +37,14 @@
         </FormField>
 
         <Message
+          v-for="error in registerError"
+          :key="error"
           v-if="registerError"
           severity="error"
           size="small"
           variant="simple"
         >
-          {{ registerError }}
+          {{ error.message }}
         </Message>
 
         <Button
@@ -75,12 +77,12 @@ let registerData = ref({
   password: "",
 });
 
-let registerError = ref("");
+let registerError = ref([]);
 
 const resolver = ref(
   zodResolver(
     z.object({
-      email: z.string().email("Email invalide"),
+      email: z.email("Email invalide"),
       password: z
         .string()
         .min(8, "Le mot de passe doit contenir au moins 8 caractères"),
@@ -95,7 +97,7 @@ const onFormSubmit = async ({ valid, values }: any) => {
         await router.push("/login");
       }
     } catch (error: any) {
-      registerError.value = error.message;
+      registerError.value = error.errors;
       return;
     }
   }
