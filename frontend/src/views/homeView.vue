@@ -15,32 +15,16 @@
         <div class="boxes-container">
           <div class="segmented-bar">
             <div
+              v-for="i in 5"
+              :key="i"
+              :style="{ flexGrow: totalCardsByBox[i] }"
               class="segment"
-              :style="{ flexGrow: totalCardsByBox[1] }"
-            ></div>
-            <div
-              class="segment"
-              :style="{ flexGrow: totalCardsByBox[2] }"
-            ></div>
-            <div
-              class="segment"
-              :style="{ flexGrow: totalCardsByBox[3] }"
-            ></div>
-            <div
-              class="segment"
-              :style="{ flexGrow: totalCardsByBox[4] }"
-            ></div>
-            <div
-              class="segment"
-              :style="{ flexGrow: totalCardsByBox[5] }"
             ></div>
           </div>
           <div class="boxes-cards">
-            <h1 class="box-card">{{ totalCardsByBox[1] }}</h1>
-            <h1 class="box-card">{{ totalCardsByBox[2] }}</h1>
-            <h1 class="box-card">{{ totalCardsByBox[3] }}</h1>
-            <h1 class="box-card">{{ totalCardsByBox[4] }}</h1>
-            <h1 class="box-card">{{ totalCardsByBox[5] }}</h1>
+            <h1 v-for="i in 5" :key="i" class="box-card">
+              {{ totalCardsByBox[i] }}
+            </h1>
           </div>
         </div>
       </div>
