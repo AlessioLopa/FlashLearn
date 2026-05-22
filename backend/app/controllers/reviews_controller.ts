@@ -29,6 +29,7 @@ export default class ReviewsController {
     if (await bouncer.denies('isReviewable', card, now)) {
       return response.badRequest({ message: "La carte n'est pas encore prête à être révisée" })
     }
+
     const { success } = await request.validateUsing(reviewValidator)
 
     if (success) {
@@ -93,7 +94,7 @@ export default class ReviewsController {
       .exec()
 
     if (cards.length === 0) {
-      return response.badRequest({ message: 'Aucune carte à réviser' })
+      return response.badRequest({ code: 'NO_CARDS_TO_REVIEW', message: 'Aucune carte à réviser' })
     }
 
     return response.ok(cards)

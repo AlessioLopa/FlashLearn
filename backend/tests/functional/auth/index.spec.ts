@@ -11,12 +11,12 @@ test.group('Register', () => {
     response.assertBodyContains({
       errors: [
         {
-          message: 'The email field must be defined',
+          message: 'Le champ email est requis',
           field: 'email',
           rule: 'required',
         },
         {
-          message: 'The password field must be defined',
+          message: 'Le champ password est requis',
           field: 'password',
           rule: 'required',
         },
@@ -34,7 +34,7 @@ test.group('Register', () => {
     response.assertBodyContains({
       errors: [
         {
-          message: 'The email field must be a valid email address',
+          message: 'Email invalide',
           rule: 'email',
         },
       ],
@@ -51,7 +51,7 @@ test.group('Register', () => {
     response.assertBodyContains({
       errors: [
         {
-          message: 'The email has already been taken',
+          message: 'Cet email est déjà utilisé',
           rule: 'database.unique',
           field: 'email',
         },
@@ -90,11 +90,7 @@ test.group('Login', () => {
     })
     response.assertStatus(400)
     response.assertBodyContains({
-      errors: [
-        {
-          message: 'Invalid user credentials',
-        },
-      ],
+      message: 'Identifiants invalides',
     })
   })
 
@@ -108,12 +104,12 @@ test.group('Login', () => {
     response.assertBodyContains({
       errors: [
         {
-          message: 'The email field must be defined',
+          message: 'Le champ email est requis',
           field: 'email',
           rule: 'required',
         },
         {
-          message: 'The password field must be defined',
+          message: 'Le champ password est requis',
           field: 'password',
           rule: 'required',
         },
@@ -131,7 +127,7 @@ test.group('Login', () => {
     response.assertBodyContains({
       errors: [
         {
-          message: 'The email field must be a valid email address',
+          message: 'Email invalide',
           rule: 'email',
         },
       ],
@@ -146,11 +142,7 @@ test.group('Login', () => {
     })
     response.assertStatus(400)
     response.assertBodyContains({
-      errors: [
-        {
-          message: 'Invalid user credentials',
-        },
-      ],
+      message: 'Identifiants invalides',
     })
   })
 })
@@ -168,7 +160,7 @@ test.group('Logout', () => {
     })
     response.assertStatus(200)
     response.assertBodyContains({
-      message: 'Logged out',
+      message: 'Déconnexion réussie',
     })
   })
 
@@ -177,11 +169,7 @@ test.group('Logout', () => {
     const response = await client.post('/api/logout')
     response.assertStatus(401)
     response.assertBodyContains({
-      errors: [
-        {
-          message: 'Unauthorized access',
-        },
-      ],
+      message: 'Non autorisé',
     })
   })
 })

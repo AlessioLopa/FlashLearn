@@ -29,7 +29,7 @@ export default class HttpExceptionHandler extends ExceptionHandler {
     if (error instanceof vineJSErrors.E_VALIDATION_ERROR) {
       return ctx.response.unprocessableEntity({
         status: 422,
-        error: error.messages,
+        errors: error.messages,
       })
     }
     return super.handle(error, ctx)
