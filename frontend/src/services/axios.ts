@@ -22,6 +22,13 @@ api.interceptors.response.use(
       alert("Erreur réseau");
       return Promise.reject(error);
     }
+
+    if (error.response.status === 401 && localStorage.getItem("access_token")) {
+      localStorage.removeItem("access_token");
+      location.reload();
+      return Promise.reject(error);
+    }
+
     error = {
       message: error.response.data?.message,
       status: error.response?.status,
