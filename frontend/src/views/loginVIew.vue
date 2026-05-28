@@ -35,15 +35,8 @@
           </Message>
         </FormField>
 
-        <Message
-          v-for="error in loginError"
-          :key="error"
-          v-if="loginError"
-          severity="error"
-          size="small"
-          variant="simple"
-        >
-          {{ error.message }}
+        <Message severity="error" size="small" variant="simple">
+          {{ loginError }}
         </Message>
 
         <Button
@@ -78,7 +71,7 @@ let loginData = ref({
   password: "",
 });
 
-let loginError = ref([]);
+let loginError = ref("");
 
 const resolver = ref(
   zodResolver(
@@ -98,7 +91,7 @@ const onFormSubmit = async ({ valid, values }: any) => {
         router.push("/home");
       }
     } catch (error: any) {
-      loginError.value = error.errors;
+      loginError.value = error.message;
       return;
     }
   }
