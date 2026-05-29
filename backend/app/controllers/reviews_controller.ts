@@ -29,7 +29,6 @@ export default class ReviewsController {
     if (await bouncer.denies('isReviewable', card, now)) {
       return response.badRequest({ message: "La carte n'est pas encore prête à être révisée" })
     }
-
     const { success } = await request.validateUsing(reviewValidator)
 
     if (success) {
@@ -78,7 +77,7 @@ export default class ReviewsController {
 
     await card.save()
 
-    return response.ok({ message: 'Review recorded', success: success, card: card })
+    return response.ok({ message: 'Révision enregistrée', success: success, card: card })
   }
 
   async review({ response, auth }: HttpContext) {

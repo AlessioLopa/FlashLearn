@@ -27,10 +27,13 @@ describe("Auth", () => {
   });
 
   it("E2E-03: Data validation login", () => {
+    // Go to the login page
     cy.visit("http://localhost:5174/login");
 
+    // Click on the submit button without entering any values
     cy.get('button[type="submit"]').click();
 
+    // Verify that the validation messages are displayed
     cy.contains("Email invalide");
     cy.contains("Le mot de passe doit contenir au moins 8 caractères");
   });

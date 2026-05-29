@@ -25,7 +25,7 @@ export default class CardsController {
     if (cardCount.length >= 20) {
       return response.unprocessableEntity({
         message:
-          'Vous avez atteitnt le nombre maximum de cartes en box 1 (20). Veuillez réviser vos cartes pour en ajouter de nouvelles.',
+          'Vous avez atteint le nombre maximum de cartes en box 1 (20). Veuillez réviser vos cartes pour en ajouter de nouvelles.',
       })
     }
 
