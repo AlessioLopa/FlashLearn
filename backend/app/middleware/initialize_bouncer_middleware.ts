@@ -24,9 +24,8 @@ export default class InitializeBouncerMiddleware {
     /**
      * Share bouncer helpers with Edge templates.
      */
-    //--ignore-ts-errors
     if ('view' in ctx) {
-      ctx.view.share(ctx.bouncer.edgeHelpers)
+      ;(ctx as any).view.share(ctx.bouncer.edgeHelpers)
     }
 
     return next()

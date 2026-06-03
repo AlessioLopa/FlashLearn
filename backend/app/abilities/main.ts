@@ -27,5 +27,5 @@ export const cardSecurity = Bouncer.ability((user: User, card: Card) => {
 
 //--ignore-ts-errors
 export const isReviewable = Bouncer.ability((user: User, card: Card, now: DateTime) => {
-  return card.next_review_at === null || card.next_review_at <= now
+  return card.next_review_at === null || card.next_review_at <= now || card.user_id === user.id
 })
