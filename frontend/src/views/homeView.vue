@@ -48,14 +48,24 @@
       </div>
       <div class="cards-list">
         <h1>Cartes</h1>
-        <DataTable
-          :value="cards"
-          scrollable
-          scrollHeight="400px"
-          class="cards-datatable"
-        >
+        <DataTable :value="cards" scrollable class="cards-datatable">
           <Column style="width: auto" field="recto" header="Recto"></Column>
           <Column style="width: auto" field="verso" header="Verso"></Column>
+          <Column style="width: auto" field="box" header="Boîte"></Column>
+          <Column
+            style="width: auto"
+            field="next_review_at"
+            header="Prochaine révision"
+          >
+            <template #body="slotProps">
+              <p v-if="slotProps.data.nextReviewAt">
+                {{
+                  new Date(slotProps.data.nextReviewAt).toLocaleString("fr-FR")
+                }}
+              </p>
+              <p v-else>Pas encore révisé</p>
+            </template>
+          </Column>
           <Column style="width: 4rem">
             <template #body="{ data }">
               <Button
@@ -109,7 +119,7 @@ import EditCardDialog from "@/components/editCardDialog.vue";
 
 const cards = ref([]);
 const totalCards = ref(0);
-const totalCardsByBox = ref({
+const totalCardsByBox = ref<{ [key: number]: number }>({
   1: 0,
   2: 0,
   3: 0,
@@ -132,6 +142,8 @@ const fetchCards = async () => {
   cards.value = await getCards().catch((error: any) => {
     alert(error.message);
   });
+
+  console.log(cards.value);
 
   totalCards.value = cards.value.length;
 
@@ -189,10 +201,10 @@ const startReview = async () => {
 #page {
   display: flex;
   justify-content: center;
-  height: 100vh;
+  min-height: 100vh;
   background: #f5f5f5;
-  overflow: hidden;
   margin: 0;
+  padding: 2rem 0;
 }
 
 .content {
