@@ -37,9 +37,8 @@
         </FormField>
 
         <Message
-          v-for="error in registerError"
-          :key="error"
-          v-if="registerError"
+          v-for="(error, index) in registerError"
+          :key="index"
           severity="error"
           size="small"
           variant="simple"
@@ -77,7 +76,7 @@ let registerData = ref({
   password: "",
 });
 
-let registerError = ref([]);
+let registerError = ref<{ message: string }[]>([]);
 
 const resolver = ref(
   zodResolver(
