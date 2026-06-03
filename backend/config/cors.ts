@@ -11,7 +11,7 @@ const corsConfig = defineConfig({
   origin: [
     'http://localhost:5174',
     'http://localhost:5173',
-    'https://flash-learn-2mto9tg1z-alessiolopardo-8131s-projects.vercel.app/login',
+    'https://flash-learn-2mto9tg1z-alessiolopardo-8131s-projects.vercel.app',
   ],
   methods: ['GET', 'HEAD', 'POST', 'PUT', 'DELETE'],
   headers: true,
