@@ -8,7 +8,7 @@ import { defineConfig } from '@adonisjs/cors'
  */
 const corsConfig = defineConfig({
   enabled: true,
-  origin: ['https://flash-learn-2mto9tg1z-alessiolopardo-8131s-projects.vercel.app'],
+  origin: ['https://flash-learn-eight.vercel.app'],
   methods: ['GET', 'HEAD', 'POST', 'PUT', 'DELETE'],
   headers: true,
   exposeHeaders: [],
