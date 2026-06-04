@@ -22,7 +22,7 @@ export default class HttpExceptionHandler extends ExceptionHandler {
         case 'E_UNAUTHORIZED_ACCESS':
           return ctx.response.unauthorized({ status: 401, message: 'Non autorisé' })
         case 'E_INVALID_CREDENTIALS':
-          return ctx.response.badRequest({ status: 400, message: 'Identifiants invalides' })
+          return ctx.response.forbidden({ status: 403, message: 'Identifiants invalides' })
       }
     }
 

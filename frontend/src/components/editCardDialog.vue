@@ -73,8 +73,14 @@ const emit = defineEmits(["update:visible"]);
 const resolver = ref(
   zodResolver(
     z.object({
-      recto: z.string().min(4, "Le recto ne peut pas être vide"),
-      verso: z.string().min(4, "Le verso ne peut pas être vide"),
+      recto: z
+        .string()
+        .min(1, "Le recto ne peut pas être vide")
+        .max(255, "Le recto ne peut pas dépasser 255 caractères"),
+      verso: z
+        .string()
+        .min(1, "Le verso ne peut pas être vide")
+        .max(255, "Le verso ne peut pas dépasser 255 caractères"),
     }),
   ),
 );
