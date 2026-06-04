@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const api = axios.create({
-  baseURL: "https://flashlearn-production-1a0e.up.railway.app/api",
+  baseURL: "http://localhost:3333/api",
   headers: { "Content-Type": "application/json" },
 });
 
