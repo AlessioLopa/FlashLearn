@@ -88,7 +88,7 @@ test.group('Login', () => {
       email: 'alessio.lopardo@etml.ch',
       password: 'wrongpassword',
     })
-    response.assertStatus(400)
+    response.assertStatus(403)
     response.assertBodyContains({
       message: 'Identifiants invalides',
     })
@@ -140,7 +140,7 @@ test.group('Login', () => {
       email: 'test@test.com',
       password: 'password',
     })
-    response.assertStatus(400)
+    response.assertStatus(403)
     response.assertBodyContains({
       message: 'Identifiants invalides',
     })
