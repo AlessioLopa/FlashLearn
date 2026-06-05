@@ -4,7 +4,7 @@ describe("Auth", () => {
   });
 
   it("E2E-01: Register", () => {
-    cy.visit("http://localhost:5174/register");
+    cy.visit("http://localhost:5173/register");
 
     cy.get('input[name="email"]').type("test@etml.ch");
     cy.get('input[name="password"]').type("password");
@@ -14,7 +14,7 @@ describe("Auth", () => {
   });
 
   it("E2E-02: Login", () => {
-    cy.visit("http://localhost:5174/login");
+    cy.visit("http://localhost:5173/login");
 
     cy.get('input[name="email"]').type("alessio.lopardo@etml.ch");
     cy.get('input[name="password"]').type("password");
@@ -28,7 +28,7 @@ describe("Auth", () => {
 
   it("E2E-03: Data validation login", () => {
     // Go to the login page
-    cy.visit("http://localhost:5174/login");
+    cy.visit("http://localhost:5173/login");
 
     // Click on the submit button without entering any values
     cy.get('button[type="submit"]').click();

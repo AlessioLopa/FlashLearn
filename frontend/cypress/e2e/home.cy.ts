@@ -15,7 +15,7 @@ describe("Dashboard", () => {
 
   it("E2E-04: Visit Dashboard", () => {
     // Visit the dashboard
-    cy.visit("http://localhost:5174/home");
+    cy.visit("http://localhost:5173/home");
     cy.url().should("include", "/home");
 
     // Verify that the datatable is visible by selecting it with its class
@@ -46,7 +46,7 @@ describe("Dashboard", () => {
       localStorage.setItem("access_token", response.body.token.token);
     });
 
-    cy.visit("http://localhost:5174/home");
+    cy.visit("http://localhost:5173/home");
 
     cy.url().should("include", "/home");
 
@@ -69,7 +69,7 @@ describe("Dashboard", () => {
   });
 
   it("E2E-06: Data validation new card", () => {
-    cy.visit("http://localhost:5174/home");
+    cy.visit("http://localhost:5173/home");
 
     cy.url().should("include", "/home");
 

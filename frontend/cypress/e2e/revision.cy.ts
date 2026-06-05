@@ -8,7 +8,7 @@ describe("Revision", () => {
     }).then((response) => {
       localStorage.setItem("access_token", response.body.token.token);
     });
-    cy.visit("http://localhost:5174/home");
+    cy.visit("http://localhost:5173/home");
   });
 
   it("E2E-07: Revision with correct answer on the first card", () => {
